@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>击鼓传花</title>
+    <script>
+        //封装队列
+        function Queue() {
+            //利用数组封装
+            this.items = [];
+            //在队尾添加元素
+            Queue.prototype.enqueue = function (element) {
+                this.items.push(element);
+            };
+            //在队首删除元素
+            Queue.prototype.dequeue = function () {
+                return this.items.shift();
+            };
+            //返回队首元素
+            Queue.prototype.front = function () {
+              return this.items[0];
+            };
+            //返回队列的长度
+            Queue.prototype.size = function () {
+              return this.items.length;
+            };
+            //判断队列是否为空
+            Queue.prototype.isEmpty = function () {
+                return  this.items.length == 0;
+            }
+            //将数组转为字符串
+            Queue.prototype.toString = function () {
+               var resultStr = '';
+                for (let i = 0; i < this.items.length; i++) {
+                    resultStr += this.items[i] + '';
+                }
+                return resultStr;
+            };
+        }
+        function passGame(nameList,num) {
+            var queue = new Queue();
+            for (let i = 0; i < nameList.length; i++) {
+                //将元素加入队列
+                queue.enqueue(nameList[i]);
+            }
+            while (queue.size()>1){
+                for (let i = 0; i < num - 1; i++) {
+                    queue.enqueue(queue.dequeue());
+                }
+                queue.dequeue();
+            }
+            alert(queue.size());
+            var endName = queue.front();
+            alert('最终剩下的人：'+endName);
+            return nameList.indexOf(endName);
+        }
+        var List = ['zf','gq','wl','gwy'];
+        passGame(List,2);//zf
+    </script>
+</head>
+<body>
+
+</body>
+</html>

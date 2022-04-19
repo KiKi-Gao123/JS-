@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>优先级队列</title>
+</head>
+<body>
+<script>
+    //封装优先级队列的函数
+    function PriorityQueue() {
+        //封装一个新的构造函数，用于存储数据和优先级
+        function QueueElement(element,pritority) {
+            this.element = element;
+            this.priority = pritority;
+        }
+
+        this.items = [];
+
+        //1.插入操作
+        PriorityQueue.prototype.enqueue = function (element,priority) {
+            //创建对象
+            var queueElement = new QueueElement(element,priority);
+            //判断队列是否为空
+            if (this.items.length == 0){
+                //为空时，直接插入
+                this.items.push(queueElement);
+            }else {
+                var added = false;
+                for (let i = 0; i < this.items.length; i++) {
+                    if (queueElement.priority < this.items[i].priority){
+                        //splice(插入起始位置,删除元素的个数,插入的元素)
+                        this.items.splice(i,0,queueElement);
+                        added = true;
+                        break;
+                    }
+                }
+                if (!added){
+                    this.items.push(queueElement);
+                }
+            }
+
+        };
+
+        //删除元素
+        PriorityQueue.prototype.dequeue=function () {
+            return this.items.shift();
+        };
+        //查看队首元素
+        PriorityQueue.prototype.front = function () {
+            return this.items[0];
+        };
+        //查看队列是否为空
+        PriorityQueue.prototype.isEmpty = function () {
+            return this.items.length == 0;
+        };
+        //查看元素个数
+        PriorityQueue.prototype.size = function () {
+            return this.items.length;
+        };
+        //toString方法
+        PriorityQueue.prototype.toString = function () {
+            var resultStr = '';
+            for (let i = 0; i < this.items.length; i++) {
+                resultStr += this.items[i].element +'-'+this.items[i].priority+' ';
+            }
+            return resultStr;
+        };
+    }
+
+    var pq = new PriorityQueue();
+    //enqueue方法
+    pq.enqueue('abc',111);
+    pq.enqueue('bcd',222);
+    pq.enqueue('cde',333);
+    pq.enqueue('def',444);
+    console.log(pq);
+    // 0: QueueElement {element: 'abc', priority: 111}
+    // 1: QueueElement {element: 'bcd', priority: 222}
+    // 2: QueueElement {element: 'cde', priority: 333}
+    // 3: QueueElement {element: 'def', priority: 444}
+
+</script>
+</body>
+</html>

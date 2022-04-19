@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script>
+    //定义一个构造函数(栈)
+    function Stack() {
+        this.items = [];
+        //1.实现元素输入
+        Stack.prototype.push = function (element) {
+            this.items.push(element);
+        }
+        //2.实现元素弹出
+        Stack.prototype.pop = function (){
+            this.items.pop();
+        }
+        //3.实现元素的读取
+        Stack.prototype.peek = function () {
+            return this.items[this.items.length - 1];
+        }
+        //4.判断栈是否为空
+        Stack.prototype.isEmpty = function () {
+            return this.items.length == 0;
+        }
+        //5.获取栈中的元素个数
+        Stack.prototype.size = function () {
+            return this.items.length;
+        }
+        //6.toString方法
+        Stack.prototype.toString = function () {
+            var resultString = '';
+            for (var i = 0; i < this.items.length; i++) {
+                resultString += this.items[i] + '';
+            }
+            return resultString;
+        }
+
+    }
+
+    var stack1 = new Stack();
+    stack1.push(1);
+    stack1.push(2);
+    stack1.push(3);
+    alert(stack1);
+
+    stack1.pop();
+    stack1.pop();
+    alert(stack1);
+
+    // stack1.isEmpty();
+    alert(stack1.isEmpty());
+    alert(stack1.size());
+    alert(stack1.toString());
+
+    //函数
+
+</script>
+
+</body>
+</html>

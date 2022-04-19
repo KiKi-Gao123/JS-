@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>封装链表</title>
+</head>
+<body>
+<script>
+/*
+            链表的封装：链表的存储基于数组，但是每个元素的存储都由两项构成 <数据+下一个元素的地址>
+                1.append
+                2.insert
+                3.indexOf
+                4.removeAt
+                5.remove
+                6.size
+                7.isEmpty
+                8.toString
+* */
+
+function LinkedList() {
+
+    //封装一个节点类，用来创建节点信息
+    function Node(element) {
+        this.element = element;
+        //默认next指向空
+        this.next = null;
+    }
+    //基本属性
+    this.length = 0;
+    //默认头节点指向空
+    this.head = null;
+
+    //1.append
+    LinkedList.prototype.append = function (element){
+        //创建一个新节点
+        var newNode = new Node(element);
+        //判断头节点是否为空
+        if (this.head === null){
+            //直接添加
+            this.head = newNode;
+        }else{
+            //定义一个元素，指向当前的元素
+            var current = this.head;
+            //current.next != null 进入循环
+            while (current.next){
+                current = current.next;
+            }
+            //current.next == null时跳出循环
+            current.next = newNode;
+        }
+        //更新长度
+        this.length += 1;
+    };
+
+    //insert方法
+    LinkedList.prototype.insert = function (position,element) {
+        //创建元素
+        var newNode = new Node(element);
+        var current = this.head;
+        var previous = null;
+        var index = 0;
+        //越界判断
+        if (position < 0 || position > this.length)
+            return false;
+        if (position == 0){
+            newNode.next = this.head;
+            this.head = newNode;
+        }else{
+
+            while (index < position){
+                previous = current;
+                current = current.next;
+                index ++;
+            }
+            //当index == position时
+            newNode.next = current;
+            previous.next = newNode;
+
+        }
+        this.length += 1;
+        return true;
+
+    }
+
+    //removeAt方法
+    LinkedList.prototype.removeAt = function (position) {
+        //越界判断
+        if (position < 0 || position >= this.length)
+            return null;
+        //定义变量，保存数据
+        var current = this.head;
+        var previous = null;
+        var index = 0;
+        //判断是否是第一项
+        if (position == 0){
+            this.head = current.next;
+        }else {
+            while (index < position){
+                previous = current;
+                current = current.next;
+                index ++;
+            }
+            //index = position 找到了
+            previous.next = current.next;
+        }
+        //长度-1
+        this.length -= 1;
+        //返回移除的元素
+        return current.element;
+    }
+
+    //indexOf方法
+    LinkedList.prototype.indexOf = function (element) {
+        //定义元素存储数据
+        var current = this.head;
+        var index = 0;
+        while (current){
+            if (current.element === element){
+                return index;
+            }
+            index ++;
+            current = current.next;
+        }
+        return -1;
+    }
+
+    //remove方法
+    LinkedList.prototype.remove = function (element) {
+        var index = this.indexOf(element);
+        return this.removeAt(index);
+    }
+
+    //isEmpty 方法
+    LinkedList.prototype.isEmpty = function () {
+        return this.length == 0;
+    }
+
+    //size方法
+    LinkedList.prototype.size = function () {
+        return this.length;
+    }
+
+    //返回头节点
+    LinkedList.prototype.getHead = function (){
+        return this.head.element;
+    }
+
+    //返回尾节点
+    LinkedList.prototype.getTail = function () {
+        var current = this.head;
+        var index = 0;
+        while (current.next !== null){
+            current = current.next;
+        }
+        //current.next == null
+        return current.element;
+    }
+
+    //toString方法
+    LinkedList.prototype.toString = function () {
+        var resultStr = "";
+        var current = this.head;
+        while (current){
+            resultStr += current.element + ' ';
+            current = current.next;
+        }
+        return resultStr;
+    };
+
+}
+
+//测试
+var list = new LinkedList();
+list.append('gq');
+list.append('love');
+list.append('zf');
+alert(list);
+list.insert(3,'zz');
+list.insert(2,'gg');
+alert(list);
+list.removeAt(3);
+list.removeAt(2);
+alert(list);
+alert(list.indexOf('gq'));
+alert(list.indexOf('zf'));
+
+alert(list.getHead())
+list.append('end');
+alert(list.getTail());
+
+</script>
+</body>
+</html>
