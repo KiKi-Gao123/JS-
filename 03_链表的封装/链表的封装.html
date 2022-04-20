@@ -149,11 +149,9 @@ function LinkedList() {
     //返回尾节点
     LinkedList.prototype.getTail = function () {
         var current = this.head;
-        var index = 0;
         while (current.next !== null){
             current = current.next;
         }
-        //current.next == null
         return current.element;
     }
 

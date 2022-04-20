@@ -14,7 +14,7 @@
                     4.indexOf
                     5.removeAt
                     6.forwardString
-                    7.reverseString
+                    7.backwardString
                     8.toString
 
     * */
@@ -128,9 +128,36 @@
             this.length -= 1;
             return current.element;
         }
+        //indexOf
+        DoublyLinkedList.prototype.indexOf = function (element) {
+            var current = this.head;
+            var index = 0;
+            while (current){
+                if (current.element === element){
+                    return index;
+                }
+                index ++;
+                current = current.next;
+            }
+            return -1;
+        };
 
 
+        //remove
+        DoublyLinkedList.prototype.remove = function (element) {
+            var index = this.indexOf(element);
+            return this.removeAt(index);
+        }
 
+        //size方法
+        DoublyLinkedList.prototype.size = function () {
+            return this.length;
+        }
+
+        //isEmpty
+        DoublyLinkedList.prototype.isEmpty = function () {
+            return this.length === 0;
+        }
 
         //forwardString方法
         DoublyLinkedList.prototype.forwardString = function () {
@@ -180,6 +207,11 @@
     list.insert(3,'dd');
     alert(list);
     alert(list.removeAt(4));
+    alert(list.indexOf('aa'));
+    alert(list.indexOf('bb'));
+    alert(list.indexOf('cc'));
+    list.remove('aa');
+    alert(list);
 
 </script>
 </body>

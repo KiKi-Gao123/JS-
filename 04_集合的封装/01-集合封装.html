@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>封装集合</title>
+</head>
+<body>
+<script>
+    /*
+                add(value)
+                remove(value)
+                has(value)
+                clear()
+                size()
+                values()
+
+    * */
+    //封装集合
+    function Set() {
+        //属性
+        this.items = {};
+        //方法
+        //add
+        Set.prototype.add = function (value) {
+            //判断元素是否重复
+            if(this.has(value)){
+                return false;
+            }
+            //添加
+            this.items[value] = value;
+            return true;
+        }
+
+        //remove
+        Set.prototype.remove = function (value) {
+            //判断是否存在
+            if (!this.has(value)){
+                return false;
+            }
+            //删除数据
+            delete this.items[value];
+            return true;
+        }
+
+        //has
+        Set.prototype.has = function (value) {
+            return  this.items.hasOwnProperty(value);
+        }
+
+        //clear
+        Set.prototype.clear = function () {
+            this.items = {};
+        }
+
+        //size
+        Set.prototype.size = function () {
+            return Object.keys(this.items).length;
+        }
+
+        //values
+        Set.prototype.values = function () {
+            return Object.keys(this.items);
+        }
+
+        //并集
+        Set.prototype.union = function (otherSet) {
+            //1.创建一个空集合
+            var newSet = new Set();
+            var values = this.values();
+            for (let i = 0; i < values.length; i++) {
+                newSet.add(values[i]);
+            }
+            values = otherSet.values();
+            for (let i = 0; i < values.length; i++) {
+                newSet.add(values[i]);
+            }
+            return newSet;
+        }
+    }
+    //测试
+    var set = new Set();
+    //添加
+    alert(set.add('abc'));
+    alert(set.add('abc'));
+    alert(set.add('cba'));
+    alert(set.add('ccc'));
+    alert(set);
+    set.remove('abc');
+    alert(set);
+    alert(set.size());
+    set.clear();
+    alert(set.size());
+
+</script>
+</body>
+</html>
